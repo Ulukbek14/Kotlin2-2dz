@@ -27,11 +27,11 @@ class SourcesCountryUsAdapter : PagingDataAdapter<Sources, SourcesCountryUsAdapt
     class SourcesCountryUsViewHolder(private val binding: ItemSourcesCountryUsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(it: Sources) = with(binding) {
-            name.text = it.name
-            country.text = it.country
-            desc.text = it.description
-            category.text = it.category
-            languageCountry.text = it.language
+            tvName.text = it.name
+            tvCountry.text = it.country
+            tvDesc.text = it.description
+            tvCategory.text = it.category
+            tvLanguageCountry.text = it.language
         }
 
     }

@@ -33,7 +33,7 @@ class EverythingAdapter : PagingDataAdapter<EverythingModel, EverythingAdapter.E
     class EverythingViewHolder(private val binding: ItemEverythingNewsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(it: EverythingModel) = with(binding) {
-            Glide.with(img)
+            Glide.with(tvImg)
                 .load(it.urlToImage)
                 .listener(object : RequestListener<Drawable?> {
 
@@ -41,7 +41,7 @@ class EverythingAdapter : PagingDataAdapter<EverythingModel, EverythingAdapter.E
                         model: Any?,
                         target: Target<Drawable?>?,
                         isFirstResource: Boolean): Boolean {
-                        progressLoadPhoto.visibility = View.GONE
+                        pbProgressLoadPhoto.visibility = View.GONE
                         return false
                     }
 
@@ -51,20 +51,20 @@ class EverythingAdapter : PagingDataAdapter<EverythingModel, EverythingAdapter.E
                         target: Target<Drawable?>?,
                         dataSource: com.bumptech.glide.load.DataSource?,
                         isFirstResource: Boolean): Boolean {
-                        progressLoadPhoto.visibility = View.GONE
+                        pbProgressLoadPhoto.visibility = View.GONE
                         return false
                     }
                 })
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .into(img)
+                .into(tvImg)
 
-            title.text = it.title
-            desc.text = it.description
-            source.text = it.source.name
+            tvTitle.text = it.title
+            tvDesc.text = it.description
+            tvSource.text = it.source.name
             Log.e("anime", it.publishedAt)
-            time.text = dateFormatTime(it.publishedAt)
-            publishedAt.text = dateFormatTime(it.publishedAt)
-            author.text = it.author
+            tvTime.text = dateFormatTime(it.publishedAt)
+            tvPublishedAt.text = dateFormatTime(it.publishedAt)
+            tvAuthor.text = it.author
         }
     }
 }
