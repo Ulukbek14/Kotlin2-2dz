@@ -1,5 +1,6 @@
 package com.example.kotlin2_2dz.ui.fragment.everything
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -20,10 +21,6 @@ class EverythingFragment : BaseFragment<FragmentEverythingBinding, EverythingVie
     override val viewModel: EverythingViewModel by viewModels()
     private val everythingAdapter = EverythingAdapter()
 
-    override fun initialize() {
-        viewModel.fetchEverything()
-    }
-
     override fun setupRequests() {
         fetchEverything()
     }
@@ -39,7 +36,11 @@ class EverythingFragment : BaseFragment<FragmentEverythingBinding, EverythingVie
 
     private fun loadStateListener() {
         everythingAdapter.addLoadStateListener {
-            binding.swipeEverything.isRefreshing = it.refresh == LoadState.Loading
+            try {
+                binding.swipeEverything.isRefreshing = it.refresh == LoadState.Loading
+            } catch (e: IllegalStateException) {
+                Log.e("anime", "$e")
+            }
         }
     }
 

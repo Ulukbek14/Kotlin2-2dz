@@ -1,5 +1,6 @@
 package com.example.kotlin2_2dz.ui.fragment.source
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -14,16 +15,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SourceFragment: BaseFragment<FragmentSourceBinding, SourcesViewModel>(R.layout.fragment_source) {
+class SourceFragment : BaseFragment<FragmentSourceBinding, SourcesViewModel>(R.layout.fragment_source) {
 
     override val binding by viewBinding(FragmentSourceBinding::bind)
     override val viewModel: SourcesViewModel by viewModels()
 
-    private val everythingAdapter = SourcesCountryUsAdapter()
-
-    override fun initialize() {
-        viewModel.fetchSourcesCountryUs()
-    }
+    private val sourcesAdapter = SourcesCountryUsAdapter()
 
     override fun setupRequests() {
         fetchSourcesCountryUs()
@@ -39,26 +36,30 @@ class SourceFragment: BaseFragment<FragmentSourceBinding, SourcesViewModel>(R.la
     }
 
     private fun loadStateListener() {
-        everythingAdapter.addLoadStateListener {
-            binding.swipeSourcesCountry.isRefreshing = it.refresh == LoadState.Loading
+        sourcesAdapter.addLoadStateListener {
+            try {
+                binding.swipeSourcesCountry.isRefreshing = it.refresh == LoadState.Loading
+            } catch (e: IllegalStateException) {
+                Log.e("anime", "$e")
+            }
         }
     }
 
     private fun listenerSwipe() {
         binding.swipeSourcesCountry.setOnRefreshListener {
-            everythingAdapter.refresh()
+            sourcesAdapter.refresh()
         }
     }
 
     private fun setupRecycler() = with(binding.rv) {
         layoutManager = LinearLayoutManager(requireContext())
-        adapter = everythingAdapter
+        adapter = sourcesAdapter
     }
 
     private fun fetchSourcesCountryUs() {
         lifecycleScope.launch {
             viewModel.fetchSourcesCountryUs().collectLatest {
-                everythingAdapter.submitData(it)
+                sourcesAdapter.submitData(it)
             }
         }
     }
