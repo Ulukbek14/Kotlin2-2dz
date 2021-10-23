@@ -6,9 +6,7 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment<B : ViewBinding, V : BaseViewModel>(
-    @LayoutRes layoutId: Int
-) : Fragment(layoutId) {
+abstract class BaseFragment<B : ViewBinding, V : BaseViewModel>(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 
     protected abstract val binding: B
     protected abstract val viewModel: V
@@ -22,19 +20,13 @@ abstract class BaseFragment<B : ViewBinding, V : BaseViewModel>(
         setupObserves()
     }
 
-    open fun initialize() {
-    }
+    open fun initialize() {}
 
-    open fun setupViews() {
-    }
+    open fun setupViews() {}
 
-    open fun setupListeners() {
-    }
+    open fun setupListeners() {}
 
-    open fun setupRequests() {
-    }
+    open fun setupRequests() {}
 
-    open fun setupObserves() {
-    }
-
+    open fun setupObserves() {}
 }

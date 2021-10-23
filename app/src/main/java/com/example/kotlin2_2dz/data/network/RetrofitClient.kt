@@ -37,7 +37,6 @@ class RetrofitClient {
     fun provideTopHeadlinesApiService(): TopHeadlinesApiService {
         return retrofit.create(TopHeadlinesApiService::class.java)
     }
-
     fun provideSourcesApiService(): SourceApiService {
         return retrofit.create(SourceApiService::class.java)
     }

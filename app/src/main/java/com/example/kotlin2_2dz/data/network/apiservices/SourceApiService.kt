@@ -1,14 +1,15 @@
 package com.example.kotlin2_2dz.data.network.apiservices
 
-import com.example.kotlin2_2dz.model.NewsResponse
-import com.example.kotlin2_2dz.model.Sources
+import com.example.kotlin2_2dz.data.dtos.model.NewsResponseDto
+import com.example.kotlin2_2dz.data.dtos.model.SourcesDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface SourceApiService {
 
-    @GET("/v2/top-headlines/sources?apiKey=cee5ca142bd84c8b8975076757814681")
+    @GET("/v2/top-headlines/sources?apiKey=ebe66846f18e453885e497d3f5015df5")
     suspend fun fetchSourcesCountryUs(
         @Query("country") query: String,
-        @Query("page") page: Int): NewsResponse<Sources>
+        @Query("page") page: Int
+    ): NewsResponseDto<SourcesDto>
 }

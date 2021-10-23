@@ -2,13 +2,13 @@ package com.example.kotlin2_2dz.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin2_2dz.base.BaseDiffUtilitemCallback
 import com.example.kotlin2_2dz.databinding.ItemSourcesCountryUsBinding
-import com.example.kotlin2_2dz.model.Sources
+import com.example.kotlin2_2dz.domain.model.Sources
 
-class SourcesCountryUsAdapter : PagingDataAdapter<Sources, SourcesCountryUsAdapter.SourcesCountryUsViewHolder>(BaseDiffUtilitemCallback<Sources>()) {
+class SourcesCountryUsAdapter : ListAdapter<Sources, SourcesCountryUsAdapter.SourcesCountryUsViewHolder>(BaseDiffUtilitemCallback<Sources>()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SourcesCountryUsViewHolder {
         return SourcesCountryUsViewHolder(

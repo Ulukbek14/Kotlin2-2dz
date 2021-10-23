@@ -1,59 +1,40 @@
 package com.example.kotlin2_2dz.ui.fragment.topheadlines
 
-import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.kotlin2_2dz.R
 import com.example.kotlin2_2dz.base.BaseFragment
 import com.example.kotlin2_2dz.databinding.FragmentTopHeadlinesBinding
-import com.example.kotlin2_2dz.ui.adapter.EverythingAdapter
+import com.example.kotlin2_2dz.domain.model.EverythingModel
+import com.example.kotlin2_2dz.extensions.scrollListenerUploadNextPage
+import com.example.kotlin2_2dz.state.UIState
+import com.example.kotlin2_2dz.ui.activity.MainActivity
+import com.example.kotlin2_2dz.ui.adapter.ArticleAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TopHeadlinesFragment : BaseFragment<FragmentTopHeadlinesBinding, TopHeadlinesViewModel>(R.layout.fragment_top_headlines) {
+class TopHeadlinesFragment : BaseFragment<FragmentTopHeadlinesBinding, TopHeadlinesViewModel>(
+    R.layout.fragment_top_headlines
+) {
 
     override val binding by viewBinding(FragmentTopHeadlinesBinding::bind)
     override val viewModel: TopHeadlinesViewModel by viewModels()
-
-    private val everythingAdapter = EverythingAdapter()
-
-    override fun setupRequests() {
-        fetchTopHeadlines()
-    }
+    private val everythingAdapter = ArticleAdapter()
 
     override fun setupViews() {
         setupRecycler()
     }
 
     override fun setupListeners() {
-        loadStateListener()
-        listenerSwipe()
+        bottomNavigationItemReselectListener()
+        onScrollListener()
     }
 
-    private fun loadStateListener() {
-        everythingAdapter.addLoadStateListener {
-            try {
-                binding.swipeHeadlines.isRefreshing = it.refresh == LoadState.Loading
-            } catch (e: IllegalStateException) {
-                Log.e("anime", "$e")
-            }
-        }
-    }
-
-    private fun listenerSwipe() {
-        binding.swipeHeadlines.setOnRefreshListener {
-            everythingAdapter.refresh()
-        }
+    override fun setupObserves() {
+        subscribeToTopHeadlines()
     }
 
     private fun setupRecycler() = with(binding.rv) {
@@ -61,11 +42,32 @@ class TopHeadlinesFragment : BaseFragment<FragmentTopHeadlinesBinding, TopHeadli
         adapter = everythingAdapter
     }
 
-    private fun fetchTopHeadlines() {
-        lifecycleScope.launch {
-            viewModel.fetchTopHeadlines().collectLatest {
-                everythingAdapter.submitData(it)
+    private fun onScrollListener() {
+        binding.rv.scrollListenerUploadNextPage(viewModel)
+    }
+
+    private fun subscribeToTopHeadlines() {
+        viewModel.topHeadlinesState.observe(viewLifecycleOwner, {
+            when (it) {
+                is UIState.Loading -> {
+                    binding.swipeHeadlines.isRefreshing = true
+                }
+                is UIState.Error -> {
+                    Log.e("anime", it.error)
+                }
+                is UIState.Success -> {
+                    binding.swipeHeadlines.isRefreshing = false
+                    val dataList = ArrayList<EverythingModel>(everythingAdapter.currentList)
+                    it.data?.let { data -> dataList.addAll(data) }
+                    everythingAdapter.submitList(dataList)
+                }
             }
+        })
+    }
+
+    private fun bottomNavigationItemReselectListener() {
+        (requireActivity() as MainActivity).setOnBottomNavigationItemReselectListener {
+            binding.rv.smoothScrollToPosition(0)
         }
     }
 }
