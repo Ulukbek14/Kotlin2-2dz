@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private lateinit var bottomNavigationItemReselectListener: OnBottomNavigationItemReselect
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.Theme_Kotlin22dz)
         super.onCreate(savedInstanceState)
         setupNavigation()
     }

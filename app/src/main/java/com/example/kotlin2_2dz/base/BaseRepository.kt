@@ -1,6 +1,6 @@
 package com.example.kotlin2_2dz.base
 
-import com.example.kotlin2_2dz.common.Resource
+import com.example.kotlin2_2dz.common.resource.Resource
 import kotlinx.coroutines.flow.flow
 
 abstract class BaseRepository {

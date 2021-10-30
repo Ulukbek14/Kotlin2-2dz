@@ -17,8 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SourceFragment : BaseFragment<FragmentSourceBinding, SourcesViewModel>(R.layout.fragment_source) {
 
-    override val binding by viewBinding(FragmentSourceBinding::bind)
     override val viewModel: SourcesViewModel by viewModels()
+    override val binding by viewBinding(FragmentSourceBinding::bind)
     private val sourcesAdapter = SourcesCountryUsAdapter()
 
     override fun setupViews() {

@@ -17,8 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class EverythingFragment : BaseFragment<FragmentEverythingBinding, EverythingViewModel>(R.layout.fragment_everything) {
 
-    override val binding by viewBinding(FragmentEverythingBinding::bind)
     override val viewModel: EverythingViewModel by viewModels()
+    override val binding by viewBinding(FragmentEverythingBinding::bind)
     private val everythingAdapter = ArticleAdapter()
 
     override fun setupViews() {

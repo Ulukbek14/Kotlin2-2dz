@@ -16,12 +16,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TopHeadlinesFragment : BaseFragment<FragmentTopHeadlinesBinding, TopHeadlinesViewModel>(
-    R.layout.fragment_top_headlines
-) {
+class TopHeadlinesFragment : BaseFragment<FragmentTopHeadlinesBinding, TopHeadlinesViewModel>(R.layout.fragment_top_headlines) {
 
-    override val binding by viewBinding(FragmentTopHeadlinesBinding::bind)
     override val viewModel: TopHeadlinesViewModel by viewModels()
+    override val binding by viewBinding(FragmentTopHeadlinesBinding::bind)
     private val everythingAdapter = ArticleAdapter()
 
     override fun setupViews() {

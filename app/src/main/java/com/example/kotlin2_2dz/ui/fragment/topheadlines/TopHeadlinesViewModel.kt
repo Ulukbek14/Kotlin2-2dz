@@ -27,5 +27,4 @@ class TopHeadlinesViewModel @Inject constructor(private val useCases: TopHeadLin
             useCases.invoke(page)
         }
     }
-
 }

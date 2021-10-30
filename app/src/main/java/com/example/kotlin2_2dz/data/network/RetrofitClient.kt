@@ -1,6 +1,6 @@
 package com.example.kotlin2_2dz.data.network
 
-import com.example.kotlin2_2dz.constants.Constants.BASE_URL
+import com.example.kotlin2_2dz.common.constants.Constants.BASE_URL
 import com.example.kotlin2_2dz.data.network.apiservices.EverythingApiService
 import com.example.kotlin2_2dz.data.network.apiservices.SourceApiService
 import com.example.kotlin2_2dz.data.network.apiservices.TopHeadlinesApiService
@@ -21,8 +21,7 @@ class RetrofitClient {
         .build()
 
     private fun provideHttpLoggingInterceptor() = HttpLoggingInterceptor().setLevel(
-        HttpLoggingInterceptor.Level.BODY
-    )
+        HttpLoggingInterceptor.Level.BODY)
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)

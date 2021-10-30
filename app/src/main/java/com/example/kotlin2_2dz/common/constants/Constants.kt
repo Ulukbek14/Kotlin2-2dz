@@ -1,4 +1,4 @@
-package com.example.kotlin2_2dz.constants
+package com.example.kotlin2_2dz.common.constants
 
 object Constants {
 

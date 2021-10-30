@@ -1,7 +1,7 @@
 package com.example.kotlin2_2dz.data.network.apiservices
 
 import com.example.kotlin2_2dz.data.dtos.model.EverythingModelDto
-import com.example.kotlin2_2dz.data.dtos.model.NewsResponseDto
+import com.example.kotlin2_2dz.data.NewsResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
